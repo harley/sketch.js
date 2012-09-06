@@ -239,7 +239,31 @@
       width = Math.abs(event.x - original.x)
       height = Math.abs(event.y - original.y)
 
-      @context.strokeStyle = "rgb(0,0,0)"
+      @context.strokeStyle = action.color
       @context.strokeRect(original.x, original.y, width, height)
+
+  # ## line
+  #
+  # Draw a line between mouseclicks
+  $.sketch.tools.line =
+    onEvent: $.sketch.tools.marker.onEvent
+    draw: (action)->
+      @context.lineJoin = "round"
+      @context.lineCap = "round"
+      @context.lineWidth = action.size
+
+      event = action.events[action.events.length - 1]
+
+      @context.beginPath()
+      @context.moveTo action.events[0].x, action.events[0].y
+      @context.lineTo event.x, event.y
+      @context.strokeStyle = randomColor()
+      @context.stroke()
+
+  randomNumber = ->
+    Math.floor(Math.random() * 256)
+
+  randomColor = ->
+    "rgb("+ randomNumber() + "," + randomNumber() + "," + randomNumber() + ")"
 
 )(jQuery)

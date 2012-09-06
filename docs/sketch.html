@@ -194,7 +194,29 @@ width and current color wherever the user drags his or her mouse.</p>           
       <span class="nv">width = </span><span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">x</span> <span class="o">-</span> <span class="nx">original</span><span class="p">.</span><span class="nx">x</span><span class="p">)</span>
       <span class="nv">height = </span><span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">y</span> <span class="o">-</span> <span class="nx">original</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span>
 
-      <span class="nx">@context</span><span class="p">.</span><span class="nx">strokeRect</span><span class="p">(</span><span class="nx">original</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">original</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">)</span>
+      <span class="vi">@context.strokeStyle = </span><span class="nx">action</span><span class="p">.</span><span class="nx">color</span>
+      <span class="nx">@context</span><span class="p">.</span><span class="nx">strokeRect</span><span class="p">(</span><span class="nx">original</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">original</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-19">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-19">&#182;</a>               </div>               <h2>line</h2>
+
+<p>Draw a line between mouseclicks</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">$.sketch.tools.line =</span>
+    <span class="nv">onEvent: </span><span class="nx">$</span><span class="p">.</span><span class="nx">sketch</span><span class="p">.</span><span class="nx">tools</span><span class="p">.</span><span class="nx">marker</span><span class="p">.</span><span class="nx">onEvent</span>
+    <span class="nv">draw: </span><span class="nf">(action)-&gt;</span>
+      <span class="vi">@context.lineJoin = </span><span class="s">&quot;round&quot;</span>
+      <span class="vi">@context.lineCap = </span><span class="s">&quot;round&quot;</span>
+      <span class="vi">@context.lineWidth = </span><span class="nx">action</span><span class="p">.</span><span class="nx">size</span>
+
+      <span class="nv">event = </span><span class="nx">action</span><span class="p">.</span><span class="nx">events</span><span class="p">[</span><span class="nx">action</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+
+      <span class="nx">@context</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">()</span>
+      <span class="nx">@context</span><span class="p">.</span><span class="nx">moveTo</span> <span class="nx">action</span><span class="p">.</span><span class="nx">events</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">x</span><span class="p">,</span> <span class="nx">action</span><span class="p">.</span><span class="nx">events</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">y</span>
+      <span class="nx">@context</span><span class="p">.</span><span class="nx">lineTo</span> <span class="nx">event</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">y</span>
+      <span class="vi">@context.strokeStyle = </span><span class="nx">randomColor</span><span class="p">()</span>
+      <span class="nx">@context</span><span class="p">.</span><span class="nx">stroke</span><span class="p">()</span>
+
+  <span class="nv">randomNumber = </span><span class="o">-&gt;</span>
+    <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span>
+
+  <span class="nv">randomColor = </span><span class="o">-&gt;</span>
+    <span class="s">&quot;rgb(&quot;</span><span class="o">+</span> <span class="nx">randomNumber</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span> <span class="o">+</span> <span class="nx">randomNumber</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span> <span class="o">+</span> <span class="nx">randomNumber</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;)&quot;</span>
 
 <span class="p">)(</span><span class="nx">jQuery</span><span class="p">)</span>
 
