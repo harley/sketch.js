@@ -14,5 +14,5 @@ guard 'process', :name => 'Copy to min', :command => 'cp lib/sketch.js lib/sketc
 end
 
 guard 'uglify', :destination_file => "lib/sketch.min.js" do
-  watch (%r{lib/sketch.min.js})
+  watch (%r{lib/sketch.js})
 end

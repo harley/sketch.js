@@ -1,7 +1,7 @@
 <!DOCTYPE html>  <html> <head>   <title>sketch.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               sketch.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h1>Sketch.js (v0.0.1)</h1>
 
 <p><strong>Sketch.js</strong> is a simple jQuery plugin for creating drawable canvases
-using HTML5 Canvas. It supports multiple browsers including mobile 
+using HTML5 Canvas. It supports multiple browsers including mobile
 devices (albeit with performance penalties).</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="p">(</span><span class="nf">($)-&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h3>jQuery('#mycanvas').sketch(options)</h3>
 
 <p>Given an ID selector for a <code>&lt;canvas&gt;</code> element, initialize the specified
@@ -38,7 +38,7 @@ options. The available options are:</p>
 <li><code>toolLinks</code>: If <code>true</code>, automatically turn links with href of <code>#mycanvas</code>
 into tool action links. See below for a description of the available
 tool links.</li>
-<li><code>defaultTool</code>: Defaults to <code>marker</code>, the tool is any of the extensible 
+<li><code>defaultTool</code>: Defaults to <code>marker</code>, the tool is any of the extensible
 tools that the canvas should default to.</li>
 <li><code>defaultColor</code>: The default drawing color. Defaults to black.</li>
 <li><code>defaultSize</code>: The default stroke size. Defaults to 5.</li>
@@ -96,8 +96,8 @@ place.</p>             </td>             <td class="code">               <div cl
       <span class="k">this</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span>
       <span class="nx">@canvas</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s">&quot;sketch.change</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <h3>sketch.startPainting()</h3>
 
-<p><em>Internal method.</em> Called when a mouse or touch event is triggered 
-that begins a paint stroke. </p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">startPainting: </span><span class="o">-&gt;</span>
+<p><em>Internal method.</em> Called when a mouse or touch event is triggered
+that begins a paint stroke.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">startPainting: </span><span class="o">-&gt;</span>
       <span class="vi">@painting = </span><span class="kc">true</span>
       <span class="vi">@action = </span><span class="p">{</span>
         <span class="nv">tool: </span><span class="nx">@tool</span>
@@ -110,13 +110,12 @@ that begins a paint stroke. </p>             </td>             <td class="code">
       <span class="nx">@actions</span><span class="p">.</span><span class="nx">push</span> <span class="nx">@action</span> <span class="k">if</span> <span class="nx">@action</span>
       <span class="vi">@painting = </span><span class="kc">false</span>
       <span class="vi">@action = </span><span class="kc">null</span>
-      <span class="nx">@redraw</span><span class="p">()</span>
-    </pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <h3>sketch.onEvent(e)</h3>
+      <span class="nx">@redraw</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <h3>sketch.onEvent(e)</h3>
 
-<p><em>Internal method.</em> Universal event handler for the canvas. Any mouse or 
+<p><em>Internal method.</em> Universal event handler for the canvas. Any mouse or
 touch related events are passed through this handler before being passed
 on to the individual tools.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">onEvent: </span><span class="nf">(e)-&gt;</span>
-      <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">targetTouches</span>
+      <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">targetTouches</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">targetTouches</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="nv">e.pageX = </span><span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">targetTouches</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">pageX</span>
         <span class="nv">e.pageY = </span><span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">.</span><span class="nx">targetTouches</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">pageY</span>
       <span class="nx">$</span><span class="p">.</span><span class="nx">sketch</span><span class="p">.</span><span class="nx">tools</span><span class="p">[</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s">&#39;sketch&#39;</span><span class="p">).</span><span class="nx">tool</span><span class="p">].</span><span class="nx">onEvent</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s">&#39;sketch&#39;</span><span class="p">),</span> <span class="nx">e</span><span class="p">)</span>
@@ -140,8 +139,7 @@ method and then building up <strong>actions</strong> that, when passed to the <c
 will render the tool's effect to the canvas. The tool methods are executed with
 the Sketch instance as <code>this</code>.</p>
 
-<p>Tools can be added simply by adding a new key to the <code>$.sketch.tools</code> object.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">$.sketch = </span><span class="p">{</span> <span class="nv">tools: </span><span class="p">{}</span> <span class="p">}</span>
-  </pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <h2>marker</h2>
+<p>Tools can be added simply by adding a new key to the <code>$.sketch.tools</code> object.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">$.sketch = </span><span class="p">{</span> <span class="nv">tools: </span><span class="p">{}</span> <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <h2>marker</h2>
 
 <p>The marker is the most basic drawing tool. It will draw a stroke of the current
 width and current color wherever the user drags his or her mouse.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">$.sketch.tools.marker =</span>
@@ -164,7 +162,7 @@ width and current color wherever the user drags his or her mouse.</p>           
       <span class="vi">@context.lineJoin = </span><span class="s">&quot;round&quot;</span>
       <span class="vi">@context.lineCap = </span><span class="s">&quot;round&quot;</span>
       <span class="nx">@context</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">()</span>
-      
+
       <span class="nx">@context</span><span class="p">.</span><span class="nx">moveTo</span> <span class="nx">action</span><span class="p">.</span><span class="nx">events</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">x</span><span class="p">,</span> <span class="nx">action</span><span class="p">.</span><span class="nx">events</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">y</span>
       <span class="k">for</span> <span class="nx">event</span> <span class="k">in</span> <span class="nx">action</span><span class="p">.</span><span class="nx">events</span>
         <span class="nx">@context</span><span class="p">.</span><span class="nx">lineTo</span> <span class="nx">event</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">y</span>
