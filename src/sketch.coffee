@@ -92,6 +92,8 @@
               sketch.set key, $(this).attr("data-#{key}")
           if $(this).attr('data-download')
             sketch.download $(this).attr('data-download')
+          if $(this).attr('data-operation')
+            sketch.operation $(this).attr('data-operation')
           false
 
     # ### sketch.download(format)
@@ -167,6 +169,15 @@
       @context.lineJoin = "round"
       @context.lineCap = "round"
       @context.lineWidth = action.size
+
+    # ### sketch.operation(mode)
+    #
+    # Clear all drawing on the canvas
+    operation: (mode)->
+      if mode is "clear"
+        @actions = []
+
+      @redraw()
 
   # # Tools
   #
