@@ -142,7 +142,7 @@
     # touch related events are passed through this handler before being passed
     # on to the individual tools.
     onEvent: (e)->
-      if e.originalEvent && e.originalEvent.targetTouches && e.originalEvent.targetTouches.length > 0
+      if e.originalEvent && e.originalEvent.targetTouches
         e.pageX = e.originalEvent.targetTouches[0].pageX
         e.pageY = e.originalEvent.targetTouches[0].pageY
       $.sketch.tools[$(this).data('sketch').tool].onEvent.call($(this).data('sketch'), e)
@@ -220,4 +220,26 @@
       action.color = "rgba(0,0,0,0)"
       $.sketch.tools.marker.draw.call this, action
       @context.globalCompositeOperation = oldcomposite
+
+  # ## rectangle
+  #
+  # Draw a rectangle from the point clicked to the point released
+  $.sketch.tools.rectangle =
+    onEvent: $.sketch.tools.marker.onEvent
+    draw: (action)->
+      @context.lineJoin = "round"
+      @context.lineCap = "round"
+      @context.lineWidth = action.size
+
+      original = action.events[0]
+      @context.moveTo original.x, original.y
+
+      # only care about the last event
+      event = action.events[action.events.length - 1]
+      width = Math.abs(event.x - original.x)
+      height = Math.abs(event.y - original.y)
+
+      @context.strokeStyle = "rgb(0,0,0)"
+      @context.strokeRect(original.x, original.y, width, height)
+
 )(jQuery)
