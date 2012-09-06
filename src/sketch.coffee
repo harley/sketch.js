@@ -67,6 +67,7 @@
       @tool = @options.defaultTool
       @actions = []
       @action = []
+      @undone = []
 
       @canvas.bind 'click mousedown mouseup mousemove mouseleave mouseout touchstart touchmove touchend touchcancel', @onEvent
 
@@ -172,10 +173,18 @@
 
     # ### sketch.operation(mode)
     #
-    # Clear all drawing on the canvas
+    # Support modes:
+    # - clear: Clear all drawing on the canvas
+    # - undo: Undo the most recent action
+    # - redo: Redo an action if it has been undone before that
     operation: (mode)->
-      if mode is "clear"
-        @actions = []
+      switch mode
+        when "clear"
+          @actions = []
+        when "undo"
+          @undone.push @actions.pop() if @actions
+        when "redo"
+          @actions.push @undone.pop() if @undone
 
       @redraw()
 

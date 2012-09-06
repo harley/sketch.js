@@ -58,6 +58,7 @@ tools that the canvas should default to.</li>
       <span class="vi">@tool = </span><span class="nx">@options</span><span class="p">.</span><span class="nx">defaultTool</span>
       <span class="vi">@actions = </span><span class="p">[]</span>
       <span class="vi">@action = </span><span class="p">[]</span>
+      <span class="vi">@undone = </span><span class="p">[]</span>
 
       <span class="nx">@canvas</span><span class="p">.</span><span class="nx">bind</span> <span class="s">&#39;click mousedown mouseup mousemove mouseleave mouseout touchstart touchmove touchend touchcancel&#39;</span><span class="p">,</span> <span class="nx">@onEvent</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <h3>Tool Links</h3>
 
@@ -140,9 +141,17 @@ something renderable.</p>             </td>             <td class="code">       
       <span class="vi">@context.lineCap = </span><span class="s">&quot;round&quot;</span>
       <span class="vi">@context.lineWidth = </span><span class="nx">action</span><span class="p">.</span><span class="nx">size</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <h3>sketch.operation(mode)</h3>
 
-<p>Clear all drawing on the canvas</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">operation: </span><span class="nf">(mode)-&gt;</span>
-      <span class="k">if</span> <span class="nx">mode</span> <span class="o">is</span> <span class="s">&quot;clear&quot;</span>
-        <span class="vi">@actions = </span><span class="p">[]</span>
+<p>Support modes:
+- clear: Clear all drawing on the canvas
+- undo: Undo the most recent action
+- redo: Redo an action if it has been undone before that</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">operation: </span><span class="nf">(mode)-&gt;</span>
+      <span class="k">switch</span> <span class="nx">mode</span>
+        <span class="k">when</span> <span class="s">&quot;clear&quot;</span>
+          <span class="vi">@actions = </span><span class="p">[]</span>
+        <span class="k">when</span> <span class="s">&quot;undo&quot;</span>
+          <span class="nx">@undone</span><span class="p">.</span><span class="nx">push</span> <span class="nx">@actions</span><span class="p">.</span><span class="nx">pop</span><span class="p">()</span> <span class="k">if</span> <span class="nx">@actions</span>
+        <span class="k">when</span> <span class="s">&quot;redo&quot;</span>
+          <span class="nx">@actions</span><span class="p">.</span><span class="nx">push</span> <span class="nx">@undone</span><span class="p">.</span><span class="nx">pop</span><span class="p">()</span> <span class="k">if</span> <span class="nx">@undone</span>
 
       <span class="nx">@redraw</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <h1>Tools</h1>
 
