@@ -163,6 +163,11 @@
           $.sketch.tools[this.tool].draw.call sketch, this
       $.sketch.tools[@action.tool].draw.call sketch, @action if @painting && @action
 
+    setupLine: (action)->
+      @context.lineJoin = "round"
+      @context.lineCap = "round"
+      @context.lineWidth = action.size
+
   # # Tools
   #
   # Sketch.js is built with a pluggable, extensible tool foundation. Each tool works
@@ -227,9 +232,7 @@
   $.sketch.tools.rectangle =
     onEvent: $.sketch.tools.marker.onEvent
     draw: (action)->
-      @context.lineJoin = "round"
-      @context.lineCap = "round"
-      @context.lineWidth = action.size
+      @setupLine action
 
       original = action.events[0]
       @context.moveTo original.x, original.y
@@ -248,9 +251,7 @@
   $.sketch.tools.line =
     onEvent: $.sketch.tools.marker.onEvent
     draw: (action)->
-      @context.lineJoin = "round"
-      @context.lineCap = "round"
-      @context.lineWidth = action.size
+      @setupLine action
 
       event = action.events[action.events.length - 1]
 
@@ -259,6 +260,28 @@
       @context.lineTo event.x, event.y
       @context.strokeStyle = randomColor()
       @context.stroke()
+
+  $.sketch.tools.circle =
+    onEvent: $.sketch.tools.marker.onEvent
+
+    draw: (action)->
+      @setupLine action
+
+      original = action.events[0]
+      @context.moveTo action.events[0].x, action.events[0].y
+
+      # only care about the last event
+      event = action.events[action.events.length - 1]
+
+      centerX = Math.max(event.x, original.x) - Math.abs(event.x - original.x)/2
+      centerY = Math.max(event.y, original.y) - Math.abs(event.y - original.y)/2
+      distance = Math.sqrt(Math.sqrt(Math.pow(event.x - original.x, 2)) + Math.pow(event.y - original.y, 2))
+
+      @context.beginPath()
+      @context.strokeStyle = randomColor()
+      @context.arc(centerX, centerY, distance, Math.PI*2, 0, true)
+      @context.stroke()
+      @context.closePath()
 
   randomNumber = ->
     Math.floor(Math.random() * 256)
