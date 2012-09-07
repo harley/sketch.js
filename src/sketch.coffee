@@ -1,8 +1,11 @@
-# # Sketch.js (v0.0.1)
+# # Sketch.js (v0.0.2)
 #
 # **Sketch.js** is a simple jQuery plugin for creating drawable canvases
 # using HTML5 Canvas. It supports multiple browsers including mobile
 # devices (albeit with performance penalties).
+#
+# Sketch was originally written by Michael Bleigh from Intridea, Inc. More features are being added by Harley Trung, including tools to insert lines, rectangles, circles, text as well as additional operations for undoing, redoing and clearing the canvas
+
 (($)->
   # ### jQuery('#mycanvas').sketch(options)
   #
