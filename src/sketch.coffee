@@ -303,9 +303,9 @@
       # only care about the last event
       event = action.events[action.events.length - 1]
 
-      centerX = Math.max(event.x, original.x) - Math.abs(event.x - original.x)/2
-      centerY = Math.max(event.y, original.y) - Math.abs(event.y - original.y)/2
-      distance = Math.sqrt(Math.sqrt(Math.pow(event.x - original.x, 2)) + Math.pow(event.y - original.y, 2))
+      centerX = (event.x + original.x) / 2
+      centerY = (event.y + original.y) / 2
+      distance = Math.sqrt(Math.pow(event.x - original.x, 2) + Math.pow(event.y - original.y, 2)) / 2
 
       @context.beginPath()
       @context.arc(centerX, centerY, distance, Math.PI*2, 0, true)
