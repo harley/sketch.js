@@ -90,7 +90,7 @@
           # * `data-tool`: Change the current tool to the specified value.
           # * `data-color`: Change the draw color to the specified value.
           # * `data-size`: Change the stroke size to the specified value.
-          # # `data-font`: Font to use when data-tool='text' is used.
+          # * `data-font`: Font to use when data-tool='text' is used.
           # * `data-download`: Trigger a sketch download in the specified format.
           for key in ['color', 'size', 'tool', 'font']
             if $this.attr("data-#{key}")
@@ -175,6 +175,7 @@
       @context.lineJoin = "round"
       @context.lineCap = "round"
       @context.lineWidth = action.size
+      @context.strokeStyle = getColor action
 
     # ### sketch.operation(mode)
     #
@@ -225,8 +226,7 @@
         @redraw()
 
     draw: (action)->
-      @context.lineJoin = "round"
-      @context.lineCap = "round"
+      @setupLine action
       @context.beginPath()
 
       @context.moveTo action.events[0].x, action.events[0].y
@@ -234,8 +234,6 @@
         @context.lineTo event.x, event.y
 
         previous = event
-      @context.strokeStyle = randomColor()
-      @context.lineWidth = action.size
       @context.stroke()
 
   # ## eraser
@@ -267,7 +265,6 @@
       width = Math.abs(event.x - original.x)
       height = Math.abs(event.y - original.y)
 
-      @context.strokeStyle = action.color
       @context.strokeRect(original.x, original.y, width, height)
 
   # ## line
@@ -283,7 +280,6 @@
       @context.beginPath()
       @context.moveTo action.events[0].x, action.events[0].y
       @context.lineTo event.x, event.y
-      @context.strokeStyle = randomColor()
       @context.stroke()
 
   $.sketch.tools.circle =
@@ -303,7 +299,6 @@
       distance = Math.sqrt(Math.sqrt(Math.pow(event.x - original.x, 2)) + Math.pow(event.y - original.y, 2))
 
       @context.beginPath()
-      @context.strokeStyle = randomColor()
       @context.arc(centerX, centerY, distance, Math.PI*2, 0, true)
       @context.stroke()
       @context.closePath()
@@ -336,14 +331,21 @@
       @setupLine action
       @context.font = action.font
 
-      @context.fillStyle = randomColor()
+      @context.fillStyle = getColor action
+
       event = action.events[0]
       @context.fillText(event.text, event.x, event.y)
 
   randomNumber = ->
     Math.floor(Math.random() * 256)
 
-  randomColor = ->
+  pickRandomColor = ->
     "rgb("+ randomNumber() + "," + randomNumber() + "," + randomNumber() + ")"
+
+  getColor = (action)->
+    if action.color == 'random'
+      pickRandomColor()
+    else
+      action.color
 
 )(jQuery)
