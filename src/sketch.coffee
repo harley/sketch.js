@@ -262,8 +262,8 @@
 
       # only care about the last event
       event = action.events[action.events.length - 1]
-      width = Math.abs(event.x - original.x)
-      height = Math.abs(event.y - original.y)
+      width = event.x - original.x
+      height = event.y - original.y
 
       @context.strokeRect(original.x, original.y, width, height)
 
