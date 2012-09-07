@@ -211,11 +211,13 @@
   # width and current color wherever the user drags his or her mouse.
   $.sketch.tools.marker =
     onEvent: (e)->
+      #console.log e.type
       switch e.type
         when 'mousedown', 'touchstart'
           @startPainting()
-        when 'mouseup', 'mouseout', 'mouseleave', 'touchend', 'touchcancel'
+        when 'mouseup', 'touchend', 'touchcancel'
           @stopPainting()
+        #when 'mouseleave', 'mouseout'
 
       if @painting
         @action.events.push
