@@ -235,11 +235,15 @@
       if action.events.length > 1
         for event in action.events
           @context.lineTo event.x, event.y
+        @context.stroke()
       else
         # draw a single dot
-        @context.fillRect(Math.floor(action.events[0].x - action.size/2) - 1, Math.floor(action.events[0].y - action.size/2) - 1, action.size, action.size)
-
-      @context.stroke()
+        x = action.events[0].x
+        y = action.events[0].y
+        #@context.fillRect(x, y, action.size, action.size)
+        @context.arc(x, y, action.size / 2, 0, Math.PI*2, true)
+        @context.closePath()
+        @context.fill()
 
   # ## eraser
   #
