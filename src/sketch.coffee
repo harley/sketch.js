@@ -138,10 +138,11 @@
     #
     # *Internal method.* Called when the mouse is released or leaves the canvas.
     stopPainting: ->
-      @actions.push @action if @action
       @painting = false
-      @action = null
-      @redraw()
+      if @action
+        @actions.push @action
+        @action = null
+        @redraw()
 
     # ### sketch.onEvent(e)
     #
@@ -233,7 +234,7 @@
         @context.lineTo event.x, event.y
 
         previous = event
-      @context.strokeStyle = action.color
+      @context.strokeStyle = randomColor()
       @context.lineWidth = action.size
       @context.stroke()
 
