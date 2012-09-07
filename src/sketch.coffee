@@ -334,6 +334,7 @@
       @context.fillStyle = getColor action
 
       event = action.events[0]
+      @context.textBaseline = "middle"
       @context.fillText(event.text, event.x, event.y)
 
   randomNumber = ->
