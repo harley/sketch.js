@@ -87,8 +87,9 @@
           # * `data-tool`: Change the current tool to the specified value.
           # * `data-color`: Change the draw color to the specified value.
           # * `data-size`: Change the stroke size to the specified value.
+          # # `data-font`: Font to use when data-tool='text' is used.
           # * `data-download`: Trigger a sketch download in the specified format.
-          for key in ['color', 'size', 'tool']
+          for key in ['color', 'size', 'tool', 'font']
             if $this.attr("data-#{key}")
               sketch.set key, $(this).attr("data-#{key}")
           if $(this).attr('data-download')
@@ -302,6 +303,38 @@
       @context.arc(centerX, centerY, distance, Math.PI*2, 0, true)
       @context.stroke()
       @context.closePath()
+
+  # ### Text
+  #
+  # Prompt for text to input at the position of cursor when clicking on canvas
+  $.sketch.tools.text =
+    onEvent: (e)->
+      switch e.type
+        when 'mouseup', 'touchend'
+          @action = {
+            tool: @tool
+            color: @color
+            size: parseFloat(@size)
+            font: @font || 'normal 20px sans-serif'
+            events: []
+          }
+
+          @action.events.push
+            x: e.pageX - @canvas.offset().left
+            y: e.pageY - @canvas.offset().top
+            event: e.type
+            text: prompt("Enter text to insert")
+
+          @actions.push @action
+          @redraw()
+
+    draw: (action) ->
+      @setupLine action
+      @context.font = action.font
+
+      @context.fillStyle = randomColor()
+      event = action.events[0]
+      @context.fillText(event.text, event.x, event.y)
 
   randomNumber = ->
     Math.floor(Math.random() * 256)

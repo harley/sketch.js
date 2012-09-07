@@ -75,8 +75,13 @@ attributes are supported:</p>
 <li><code>data-tool</code>: Change the current tool to the specified value.</li>
 <li><code>data-color</code>: Change the draw color to the specified value.</li>
 <li><code>data-size</code>: Change the stroke size to the specified value.</li>
+</ul>
+
+<h1><code>data-font</code>: Font to use when data-tool='text' is used.</h1>
+
+<ul>
 <li><code>data-download</code>: Trigger a sketch download in the specified format.</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="p">[</span><span class="s">&#39;color&#39;</span><span class="p">,</span> <span class="s">&#39;size&#39;</span><span class="p">,</span> <span class="s">&#39;tool&#39;</span><span class="p">]</span>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="p">[</span><span class="s">&#39;color&#39;</span><span class="p">,</span> <span class="s">&#39;size&#39;</span><span class="p">,</span> <span class="s">&#39;tool&#39;</span><span class="p">,</span> <span class="s">&#39;font&#39;</span><span class="p">]</span>
             <span class="k">if</span> <span class="nx">$this</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&quot;data-</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
               <span class="nx">sketch</span><span class="p">.</span><span class="nx">set</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s">&quot;data-</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
           <span class="k">if</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;data-download&#39;</span><span class="p">)</span>
@@ -247,7 +252,36 @@ width and current color wherever the user drags his or her mouse.</p>           
       <span class="vi">@context.strokeStyle = </span><span class="nx">randomColor</span><span class="p">()</span>
       <span class="nx">@context</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="nx">centerX</span><span class="p">,</span> <span class="nx">centerY</span><span class="p">,</span> <span class="nx">distance</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
       <span class="nx">@context</span><span class="p">.</span><span class="nx">stroke</span><span class="p">()</span>
-      <span class="nx">@context</span><span class="p">.</span><span class="nx">closePath</span><span class="p">()</span>
+      <span class="nx">@context</span><span class="p">.</span><span class="nx">closePath</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-22">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-22">&#182;</a>               </div>               <h3>Text</h3>
+
+<p>Prompt for text to input at the position of cursor when clicking on canvas</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">$.sketch.tools.text =</span>
+    <span class="nv">onEvent: </span><span class="nf">(e)-&gt;</span>
+      <span class="k">switch</span> <span class="nx">e</span><span class="p">.</span><span class="nx">type</span>
+        <span class="k">when</span> <span class="s">&#39;mouseup&#39;</span><span class="p">,</span> <span class="s">&#39;touchend&#39;</span>
+          <span class="vi">@action = </span><span class="p">{</span>
+            <span class="nv">tool: </span><span class="nx">@tool</span>
+            <span class="nv">color: </span><span class="nx">@color</span>
+            <span class="nv">size: </span><span class="nb">parseFloat</span><span class="p">(</span><span class="nx">@size</span><span class="p">)</span>
+            <span class="nv">font: </span><span class="nx">@font</span> <span class="o">||</span> <span class="s">&#39;normal 20px sans-serif&#39;</span>
+            <span class="nv">events: </span><span class="p">[]</span>
+          <span class="p">}</span>
+
+          <span class="nx">@action</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">push</span>
+            <span class="nv">x: </span><span class="nx">e</span><span class="p">.</span><span class="nx">pageX</span> <span class="o">-</span> <span class="nx">@canvas</span><span class="p">.</span><span class="nx">offset</span><span class="p">().</span><span class="nx">left</span>
+            <span class="nv">y: </span><span class="nx">e</span><span class="p">.</span><span class="nx">pageY</span> <span class="o">-</span> <span class="nx">@canvas</span><span class="p">.</span><span class="nx">offset</span><span class="p">().</span><span class="nx">top</span>
+            <span class="nv">event: </span><span class="nx">e</span><span class="p">.</span><span class="nx">type</span>
+            <span class="nv">text: </span><span class="nx">prompt</span><span class="p">(</span><span class="s">&quot;Enter text to insert&quot;</span><span class="p">)</span>
+
+          <span class="nx">@actions</span><span class="p">.</span><span class="nx">push</span> <span class="nx">@action</span>
+          <span class="nx">@redraw</span><span class="p">()</span>
+
+    <span class="nv">draw: </span><span class="nf">(action) -&gt;</span>
+      <span class="nx">@setupLine</span> <span class="nx">action</span>
+      <span class="vi">@context.font = </span><span class="nx">action</span><span class="p">.</span><span class="nx">font</span>
+
+      <span class="vi">@context.fillStyle = </span><span class="nx">randomColor</span><span class="p">()</span>
+      <span class="nv">event = </span><span class="nx">action</span><span class="p">.</span><span class="nx">events</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="nx">@context</span><span class="p">.</span><span class="nx">fillText</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">text</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">event</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span>
 
   <span class="nv">randomNumber = </span><span class="o">-&gt;</span>
     <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span>
