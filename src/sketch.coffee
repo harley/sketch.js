@@ -232,10 +232,13 @@
       @context.beginPath()
 
       @context.moveTo action.events[0].x, action.events[0].y
-      for event in action.events
-        @context.lineTo event.x, event.y
+      if action.events.length > 1
+        for event in action.events
+          @context.lineTo event.x, event.y
+      else
+        # draw a single dot
+        @context.fillRect(Math.floor(action.events[0].x - action.size/2) - 1, Math.floor(action.events[0].y - action.size/2) - 1, action.size, action.size)
 
-        previous = event
       @context.stroke()
 
   # ## eraser
