@@ -111,7 +111,7 @@
 
         <p>Click buttons to switch between tools.</p>
 
-        <div class='demo'>
+        <div class='demo' id="tools_demo">
           <div class='tools'>
             <a href='#tools_sketch' data-tool='marker'>Marker</a>
             <a href='#tools_sketch' data-tool='eraser'>Eraser</a>
@@ -128,6 +128,12 @@
           <script type='text/javascript'>
             $(function() {
               $('#tools_sketch').sketch({defaultColor: "#ff0", defaultColor: 'random'});
+              $.each(['#f00', '#ff0', '#0f0', '#0ff', '#00f', '#f0f', '#000', '#fff'], function() {
+                $('#tools_demo .tools').append("<a href='#tools_sketch' data-color='" + this + "' style='width: 10px; background: " + this + ";'></a> ");
+              });
+              $.each([3, 5, 10, 20, 100], function() {
+                $('#tools_demo .tools').append("<a href='#tools_sketch' data-size='" + this + "' style='background: #ccc'>" + this + "</a> ");
+              });
             });
           </script>
         </div>

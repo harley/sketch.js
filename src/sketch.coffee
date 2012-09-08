@@ -231,12 +231,12 @@
       @setupLine action
       @context.beginPath()
 
-      @context.moveTo action.events[0].x, action.events[0].y
       if action.events.length > 1
+        @context.moveTo action.events[0].x, action.events[0].y
         for event in action.events
           @context.lineTo event.x, event.y
         @context.stroke()
-      else
+      else if not @erasing
         # draw a single dot
         x = action.events[0].x
         y = action.events[0].y
@@ -252,11 +252,13 @@
     onEvent: (e)->
       $.sketch.tools.marker.onEvent.call this, e
     draw: (action)->
+      @erasing = true
       oldcomposite = @context.globalCompositeOperation
       @context.globalCompositeOperation = "copy"
       action.color = "rgba(0,0,0,0)"
       $.sketch.tools.marker.draw.call this, action
       @context.globalCompositeOperation = oldcomposite
+      @erasing = false
 
   # ## rectangle
   #
