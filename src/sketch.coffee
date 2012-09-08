@@ -176,6 +176,7 @@
       @context.lineCap = "round"
       @context.lineWidth = action.size
       @context.strokeStyle = getColor action
+      @context.fillStyle = getColor action
 
     # ### sketch.operation(mode)
     #
