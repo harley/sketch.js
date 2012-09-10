@@ -254,12 +254,14 @@
       $.sketch.tools.marker.onEvent.call this, e
     draw: (action)->
       @erasing = true
+      old_color  = action.color
       oldcomposite = @context.globalCompositeOperation
       @context.globalCompositeOperation = "copy"
       action.color = "rgba(0,0,0,0)"
       $.sketch.tools.marker.draw.call this, action
       @context.globalCompositeOperation = oldcomposite
       @erasing = false
+      action.color = old_color
 
   # ## rectangle
   #
