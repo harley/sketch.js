@@ -72,7 +72,7 @@
       @action = []
       @undone = []
 
-      @canvas.bind 'click mousedown mouseup mousemove mouseleave mouseout touchstart touchmove touchend touchcancel', @onEvent
+      @canvas.bind 'click mousedown mouseup mousemove mouseleave touchstart touchmove touchend touchcancel mouseenter', @onEvent
 
       # ### Tool Links
       #
@@ -126,13 +126,14 @@
     # *Internal method.* Called when a mouse or touch event is triggered
     # that begins a paint stroke.
     startPainting: ->
-      @painting = true
-      @action = {
-        tool: @tool
-        color: @color
-        size: parseFloat(@size)
-        events: []
-      }
+      unless @painting
+        @painting = true
+        @action = {
+          tool: @tool
+          color: @color
+          size: parseFloat(@size)
+          events: []
+        }
 
     # ### sketch.stopPainting()
     #
@@ -226,7 +227,14 @@
           @startPainting()
         when 'mouseup', 'touchend', 'touchcancel'
           @stopPainting()
-        #when 'mouseleave', 'mouseout'
+        #when 'mouseleave'
+          #@mouse_outside = true
+        #when 'mouseenter'
+          #@mouse_outside = false
+          # when 'mouseout'
+          # ignore mouseout/mouseover
+          # difference between mouseleave and mouseout don't apply here
+          # http://www.mkyong.com/jquery/different-between-mouseout-and-mouseleave-in-jquery/
 
       if @painting
         @action.events.push
