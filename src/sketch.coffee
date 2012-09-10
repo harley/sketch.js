@@ -340,14 +340,15 @@
           @redraw()
 
     draw: (action) ->
-      @setupLine action
-      @context.font = action.font
-
-      @context.fillStyle = getColor action
-
       event = action.events[0]
-      @context.textBaseline = "middle"
-      @context.fillText(event.text, event.x, event.y)
+      if event.text
+        @setupLine action
+        @context.font = action.font
+
+        @context.fillStyle = getColor action
+
+        @context.textBaseline = "middle"
+        @context.fillText(event.text, event.x, event.y)
 
   randomNumber = ->
     Math.floor(Math.random() * 256)
