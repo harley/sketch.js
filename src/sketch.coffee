@@ -189,9 +189,17 @@
         when "clear"
           @actions = []
         when "undo"
-          @undone.push @actions.pop() if @actions
+          if @actions and @actions.length > 0
+            @undone.push @actions.pop()
+            # console.log "undoing", @undone
+          else
+            alert "Nothing to undo"
         when "redo"
-          @actions.push @undone.pop() if @undone
+          if @undone and @undone.length > 0
+            @actions.push @undone.pop()
+            # console.log "redoing", @actions
+          else
+            alert "Nothing to redo"
 
       @redraw()
 
