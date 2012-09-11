@@ -91,8 +91,9 @@
           # * `data-color`: Change the draw color to the specified value.
           # * `data-size`: Change the stroke size to the specified value.
           # * `data-font`: Font to use when data-tool='text' is used.
+          # * `data-text`: Text to insert when data-tool='text' is used.
           # * `data-download`: Trigger a sketch download in the specified format.
-          for key in ['color', 'size', 'tool', 'font']
+          for key in ['color', 'size', 'tool', 'font', 'text']
             if $this.attr("data-#{key}")
               sketch.set key, $(this).attr("data-#{key}")
           if $(this).attr('data-download')
@@ -352,7 +353,7 @@
             x: e.pageX - @canvas.offset().left
             y: e.pageY - @canvas.offset().top
             event: e.type
-            text: prompt("Enter text to insert")
+            text: @text || prompt("Enter text to insert")
 
           @actions.push @action
           @redraw()
