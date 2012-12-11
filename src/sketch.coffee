@@ -107,11 +107,18 @@
     # Cause the browser to open up a new window with the Data URL of the current
     # canvas. The `format` parameter can be either `png` or `jpeg`.
     download: (format)->
+      window.open this.save(format)
+
+    # ### sketch.save(format)
+    #
+    # Returns Data URL of the current canvas. The `format` parameter can be either
+    # `png` or `jpeg`.
+    save: (format)->
       format or= "png"
       format = "jpeg" if format == "jpg"
       mime = "image/#{format}"
 
-      window.open @el.toDataURL(mime)
+      @el.toDataURL(mime)
 
     # ### sketch.set(key, value)
     #
