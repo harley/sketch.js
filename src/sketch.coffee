@@ -71,6 +71,7 @@
       @actions = []
       @action = []
       @undone = []
+      @dataURLList = []
 
       @canvas.bind 'click mousedown mouseup mousemove mouseleave touchstart touchmove touchend touchcancel mouseenter', @onEvent
 
@@ -119,6 +120,18 @@
       mime = "image/#{format}"
 
       @el.toDataURL(mime)
+
+    # ### sketch.load(dataURL)
+    #
+    # Loads a Data URL image and draws it into the canvas. The `dataURL` must be a
+    # Data URL string.
+    load: (dataURL)->
+      img = new Image()
+      $(img).load (e) =>
+        @context.drawImage(img, 0, 0)
+      
+      img.src = dataURL
+      @dataURLList.push img
 
     # ### sketch.set(key, value)
     #
@@ -175,6 +188,8 @@
       @el.width = @canvas.width()
       @context = @el.getContext '2d'
       sketch = this
+      $.each @dataURLList, (i, img) =>
+        @context.drawImage(img, 0, 0)
       $.each @actions, ->
         if this.tool
           $.sketch.tools[this.tool].draw.call sketch, this
